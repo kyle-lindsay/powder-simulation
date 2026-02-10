@@ -1,17 +1,27 @@
 use macroquad::prelude::*;
 
-const WIDTH : u8 = 16;
-const HEIGHT : u8 = 16;
+mod game;
+mod grid;
+mod input;
+mod render;
 
-#[macroquad::main("powder-sim")]
+fn window_conf() -> Conf {
+    Conf {
+        window_title: "powder-sim".to_owned(),
+        window_width: 800,
+        window_height: 800,
+        window_resizable: false,
+        ..Default::default()
+    }
+}
+
+#[macroquad::main(window_conf)]
 async fn main() {
-    let window_width = screen_width();
-    let window_height = screen_height();
+    let mut game = game::Game::new();
 
     loop {
-        clear_background(BLUE);
-        // 1) update your state
-        // 2) draw the frame
+        game.update();
+        game.draw();
         next_frame().await;
     }
 }
